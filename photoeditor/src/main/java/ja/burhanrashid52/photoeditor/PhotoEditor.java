@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntRange;
@@ -104,6 +105,46 @@ public class PhotoEditor implements BrushViewChangeListener {
 
         addViewToParent(imageRootView, ViewType.IMAGE);
 
+    }
+
+
+    /**
+     * This will add image on {@link PhotoEditorView} which you drag,rotate and scale using pinch
+     * if {@link PhotoEditor.Builder#setPinchTextScalable(boolean)} enabled
+     *
+     * @param desiredDrawable bitmap image you want to add
+     */
+    public void addImage(Drawable desiredDrawable) {
+
+
+        final View imageRootView = getLayout(ViewType.IMAGE);
+        final ImageView imageView = imageRootView.findViewById(R.id.imgPhotoEditorImage);
+        final FrameLayout frmBorder = imageRootView.findViewById(R.id.frmBorder);
+        final ImageView imgClose = imageRootView.findViewById(R.id.imgPhotoEditorClose);
+
+        desiredDrawable.setTint(brushDrawingView.getBrushColor());
+        desiredDrawable.setAlpha(brushDrawingView.getOpacity());
+        imageView.setImageDrawable(desiredDrawable);
+
+        MultiTouchListener multiTouchListener = getMultiTouchListener();
+        multiTouchListener.setOnGestureControl(new MultiTouchListener.OnGestureControl() {
+            @Override
+            public void onClick() {
+                boolean isBackgroundVisible = frmBorder.getTag() != null && (boolean) frmBorder.getTag();
+                frmBorder.setBackgroundResource(isBackgroundVisible ? 0 : R.drawable.rounded_border_tv);
+                imgClose.setVisibility(isBackgroundVisible ? View.GONE : View.VISIBLE);
+                frmBorder.setTag(!isBackgroundVisible);
+            }
+
+            @Override
+            public void onLongClick() {
+
+            }
+        });
+
+        imageRootView.setOnTouchListener(multiTouchListener);
+
+        addViewToParent(imageRootView, ViewType.IMAGE);
     }
 
     /**
@@ -926,5 +967,15 @@ public class PhotoEditor implements BrushViewChangeListener {
             convertedEmojiList.add(convertEmoji(emojiUnicode));
         }
         return convertedEmojiList;
+    }
+
+    /**
+     * @return provide the size of eraser
+     * @see PhotoEditor#setBrushColor(int)
+     */
+    public int getBrushOpacity() {
+        if (brushDrawingView != null)
+            return brushDrawingView.getOpacity();
+        return 0;
     }
 }
