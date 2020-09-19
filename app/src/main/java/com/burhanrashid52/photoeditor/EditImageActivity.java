@@ -39,7 +39,7 @@ import java.io.IOException;
 
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener;
 import ja.burhanrashid52.photoeditor.PhotoEditor;
-import ja.burhanrashid52.photoeditor.PhotoEditorView;
+import ja.burhanrashid52.photoeditor.PinchZoomPhotoEditorView;
 import ja.burhanrashid52.photoeditor.PhotoFilter;
 import ja.burhanrashid52.photoeditor.SaveSettings;
 import ja.burhanrashid52.photoeditor.TextStyleBuilder;
@@ -56,7 +56,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     private static final int CAMERA_REQUEST = 52;
     private static final int PICK_REQUEST = 53;
     PhotoEditor mPhotoEditor;
-    private PhotoEditorView mPhotoEditorView;
+    private PinchZoomPhotoEditorView mPhotoEditorView;
     private PropertiesBSFragment mPropertiesBSFragment;
     private EmojiBSFragment mEmojiBSFragment;
     private StickerBSFragment mStickerBSFragment;

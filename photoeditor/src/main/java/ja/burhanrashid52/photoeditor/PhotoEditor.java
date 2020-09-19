@@ -978,4 +978,12 @@ public class PhotoEditor implements BrushViewChangeListener {
             return brushDrawingView.getOpacity();
         return 0;
     }
+
+    /**
+     * Getting size of the view to choose whether it is applicabale for orientation change
+     * {@link PhotoEditorView}
+     */
+    public boolean canApplyOrientation() {
+        return addedViews.size() != 0;
+    }
 }
