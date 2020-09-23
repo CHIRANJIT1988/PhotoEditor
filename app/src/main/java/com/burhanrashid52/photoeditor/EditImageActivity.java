@@ -263,11 +263,17 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
     private void saveImage() {
         if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             showLoading("Saving...");
+            String dirPath = Environment.getExternalStorageDirectory()
+                    + File.separator + "WA";
             File file = new File(Environment.getExternalStorageDirectory()
-                    + File.separator + ""
-                    + System.currentTimeMillis() + ".png");
+                    + File.separator + "WA");
             try {
-                file.createNewFile();
+                if(!file.exists()) {
+                    file.mkdirs();
+                }
+
+                //file.createNewFile();
+                file = new File(dirPath, System.currentTimeMillis() + ".png");
 
                 SaveSettings saveSettings = new SaveSettings.Builder()
                         .setClearViewsEnabled(true)
@@ -289,7 +295,7 @@ public class EditImageActivity extends BaseActivity implements OnPhotoEditorList
                         showSnackbar("Failed to save Image");
                     }
                 });
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 hideLoading();
                 showSnackbar(e.getMessage());

@@ -986,4 +986,8 @@ public class PhotoEditor implements BrushViewChangeListener {
     public boolean canApplyOrientation() {
         return addedViews.size() != 0;
     }
+
+    public void disableEnableBrushMode(boolean value) {
+        brushDrawingView.setBrushDrawingMode(value);
+    }
 }
